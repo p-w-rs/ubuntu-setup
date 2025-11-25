@@ -1,5 +1,5 @@
 # REQUIRES_SUDO: yes
-# DEPENDS_ON: llvm gcc
+# DEPENDS_ON: llvm gcc essential
 
 # Install Odin programming language
 # Builds in ~/.local and symlinks to /usr/local/bin

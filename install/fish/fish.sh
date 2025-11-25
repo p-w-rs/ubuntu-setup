@@ -1,6 +1,6 @@
 #!/bin/bash
 # REQUIRES_SUDO: yes
-# DEPENDS_ON:
+# DEPENDS_ON: essential
 
 # Install Fish shell
 # A smart and user-friendly command line shell

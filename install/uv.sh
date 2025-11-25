@@ -1,5 +1,5 @@
 # REQUIRES_SUDO: no
-# DEPENDS_ON:
+# DEPENDS_ON: essential
 
 # Install uv - modern Python package and project manager
 # Installs per-user (not system-wide)

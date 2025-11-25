@@ -1,5 +1,5 @@
 # REQUIRES_SUDO: no
-# DEPENDS_ON:
+# DEPENDS_ON: essential
 
 # Install Zed
 # High-performance multiplayer code editor

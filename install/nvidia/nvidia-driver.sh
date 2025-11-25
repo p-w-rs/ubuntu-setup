@@ -1,6 +1,6 @@
 #!/bin/bash
 # REQUIRES_SUDO: yes
-# DEPENDS_ON:
+# DEPENDS_ON: essential
 
 # Install NVIDIA GPU drivers
 # Adds CUDA repository and installs latest compatible driver

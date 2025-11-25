@@ -1,6 +1,6 @@
 #!/bin/bash
 # REQUIRES_SUDO: yes
-# DEPENDS_ON:
+# DEPENDS_ON: essential
 
 # Install LLVM compiler suite and tools
 # Includes: clang, clang-format, clang-tidy, lldb, lld, libc++, and more

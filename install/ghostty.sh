@@ -1,5 +1,5 @@
 # REQUIRES_SUDO: yes
-# DEPENDS_ON:
+# DEPENDS_ON: essential
 
 # Install Ghostty terminal emulator
 # Uses the official installation script

@@ -1,5 +1,5 @@
 # REQUIRES_SUDO: yes
-# DEPENDS_ON: odin
+# DEPENDS_ON: odin essential
 
 # Install OLS (Odin Language Server)
 # Language server for Odin programming language

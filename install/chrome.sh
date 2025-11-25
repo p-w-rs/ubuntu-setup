@@ -1,5 +1,5 @@
 # REQUIRES_SUDO: yes
-# DEPENDS_ON:
+# DEPENDS_ON: essential
 
 # Install Google Chrome on Debian-based systems
 # Adds the official Chrome repository for automatic updates via apt

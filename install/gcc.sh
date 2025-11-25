@@ -1,6 +1,6 @@
 #!/bin/bash
 # REQUIRES_SUDO: yes
-# DEPENDS_ON:
+# DEPENDS_ON: essential
 
 # Install GCC compiler suite and build tools
 # Includes: gcc, g++, gdb, gfortran, and essential build utilities

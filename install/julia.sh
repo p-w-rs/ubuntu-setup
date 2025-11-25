@@ -1,6 +1,6 @@
 #!/bin/bash
 # REQUIRES_SUDO: no
-# DEPENDS_ON:
+# DEPENDS_ON: essential
 
 # Install Julia programming language
 # Installs per-user (not system-wide)

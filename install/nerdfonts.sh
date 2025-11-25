@@ -1,6 +1,6 @@
 #!/bin/bash
 # REQUIRES_SUDO: no
-# DEPENDS_ON: fontconfig
+# DEPENDS_ON: fontconfig essential
 
 # Install Nerd Fonts
 # Patched fonts with icons and glyphs for developers

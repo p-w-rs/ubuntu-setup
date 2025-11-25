@@ -1,5 +1,5 @@
 # REQUIRES_SUDO: yes
-# DEPENDS_ON: llvm gcc
+# DEPENDS_ON: llvm gcc essential
 
 # Install logiops - driver for Logitech mice and keyboards
 # Requires LLVM and GCC to be installed first
