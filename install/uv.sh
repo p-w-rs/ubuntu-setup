@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: no
 # DEPENDS_ON:
 
@@ -7,12 +6,17 @@
 
 set -e
 
-echo "Installing uv Python package manager..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing uv Python Package Manager"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Run the official uv installation script
+echo "→ Running uv installation script..."
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 echo ""
 echo "✓ uv installed successfully!"
 echo ""
 echo "Start using uv with: uv --help"
+echo ""

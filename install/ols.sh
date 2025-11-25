@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON: odin
 
@@ -7,7 +6,10 @@
 
 set -e
 
-echo "Installing OLS (Odin Language Server)..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing OLS (Odin Language Server)"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Get the original user
 ORIGINAL_USER="${SUDO_USER:-$USER}"
@@ -19,22 +21,22 @@ sudo -u $ORIGINAL_USER mkdir -p "$ORIGINAL_HOME/.local"
 # Clone OLS repository to ~/.local
 OLS_DIR="$ORIGINAL_HOME/.local/ols"
 if [ ! -d "$OLS_DIR" ]; then
-    echo "Cloning OLS repository to ~/.local/ols..."
-    sudo -u $ORIGINAL_USER git clone https://github.com/DanielGavin/ols "$OLS_DIR"
+    echo "→ Cloning OLS repository to ~/.local/ols..."
+    sudo -u $ORIGINAL_USER git clone https://github.com/DanielGavin/ols "$OLS_DIR" 2>&1 | grep -v "^$" || true
 else
-    echo "OLS repository already exists, updating..."
+    echo "→ OLS repository already exists, updating..."
     cd "$OLS_DIR"
-    sudo -u $ORIGINAL_USER git pull
+    sudo -u $ORIGINAL_USER git pull > /dev/null 2>&1
 fi
 
 cd "$OLS_DIR"
 
 # Build OLS
-echo "Building OLS..."
-sudo -u $ORIGINAL_USER ./build.sh
+echo "→ Building OLS..."
+sudo -u $ORIGINAL_USER ./build.sh > /dev/null 2>&1
 
 # Create symlink in /usr/local/bin
-echo "Creating symlink in /usr/local/bin..."
+echo "→ Creating symlink in /usr/local/bin..."
 ln -sf "$OLS_DIR/ols" /usr/local/bin/ols
 
 echo ""
@@ -46,3 +48,4 @@ echo ""
 echo "Usage: ols"
 echo ""
 echo "Configure your editor to use OLS as the language server for Odin files"
+echo ""

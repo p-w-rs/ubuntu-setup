@@ -7,9 +7,13 @@
 
 set -e
 
-echo "Installing zoxide..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing zoxide"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Install using the official installation script
+echo "→ Downloading and installing zoxide..."
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 
 echo ""
@@ -30,3 +34,4 @@ echo "Usage: z [directory]"
 echo "Examples:"
 echo "  z documents    # Jump to most frecent match"
 echo "  zi documents   # Interactive selection with fzf"
+echo ""

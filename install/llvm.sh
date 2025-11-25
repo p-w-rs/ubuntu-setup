@@ -7,14 +7,17 @@
 
 set -e
 
-echo "Installing LLVM compiler suite..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing LLVM Compiler Suite"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install LLVM suite
-echo "Installing LLVM tools..."
+echo "→ Installing LLVM tools..."
 apt install -y \
     clang \
     clang-format \
@@ -27,8 +30,7 @@ apt install -y \
     libclang-dev \
     llvm \
     llvm-dev \
-    llvm-config \
-    llvm-runtime
+    llvm-runtime > /dev/null 2>&1
 
 echo ""
 echo "✓ LLVM suite installed successfully!"
@@ -43,3 +45,4 @@ echo "  • lld (linker)"
 echo "  • libc++ (C++ standard library)"
 echo ""
 echo "Verify installation: clang --version"
+echo ""

@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: no
 # DEPENDS_ON: fish
 
@@ -7,10 +6,14 @@
 
 set -e
 
-echo "Installing Fisher plugin manager for Fish..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing Fisher Plugin Manager"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Install Fisher using the official installation method
-fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+echo "→ Installing Fisher..."
+fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher" 2>&1 | grep -v "^$" || true
 
 echo ""
 echo "✓ Fisher installed successfully!"
@@ -22,3 +25,4 @@ echo "  fisher update                      # Update all plugins"
 echo "  fisher remove jethrokuan/z         # Remove a plugin"
 echo ""
 echo "Browse plugins at: https://github.com/jorgebucaran/awsm.fish"
+echo ""

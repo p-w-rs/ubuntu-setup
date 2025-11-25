@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
@@ -7,15 +6,18 @@
 
 set -e
 
-echo "Installing fzf..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing fzf"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install fzf
-echo "Installing fzf..."
-apt install -y fzf
+echo "→ Installing fzf..."
+apt install -y fzf > /dev/null 2>&1
 
 echo ""
 echo "✓ fzf installed successfully!"
@@ -30,3 +32,4 @@ echo "Shell integration:"
 echo "  Ctrl+R - Search command history"
 echo "  Ctrl+T - Search files"
 echo "  Alt+C  - Change directory"
+echo ""

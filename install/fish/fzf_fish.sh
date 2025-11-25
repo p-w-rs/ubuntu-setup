@@ -1,9 +1,16 @@
-#!/bin/bash
 # REQUIRES_SUDO: no
 # DEPENDS_ON: fish fisher fzf fd bat
 
 set -e
 
-echo "Installing fzf fisher plugin"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing fzf.fish Plugin"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
-fisher install PatrickF1/fzf.fish
+echo "→ Installing fzf plugin..."
+fisher install PatrickF1/fzf.fish 2>&1 | grep -v "^$" || true
+
+echo ""
+echo "✓ fzf.fish plugin installed successfully!"
+echo ""

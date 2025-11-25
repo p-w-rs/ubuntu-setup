@@ -7,15 +7,18 @@
 
 set -e
 
-echo "Installing file..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing file utility"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install file
-echo "Installing file..."
-apt install -y file
+echo "→ Installing file..."
+apt install -y file > /dev/null 2>&1
 
 echo ""
 echo "✓ file utility installed successfully!"
@@ -26,3 +29,4 @@ echo "  file document.pdf           # Identify file type"
 echo "  file -b document.pdf        # Brief output"
 echo "  file -i document.pdf        # MIME type"
 echo "  file *                      # Check all files in directory"
+echo ""

@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
@@ -7,11 +6,17 @@
 
 set -e
 
-echo "Installing Ghostty terminal emulator..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing Ghostty Terminal"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Run the official Ghostty installation script
+echo "→ Running Ghostty installation script..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 
 echo ""
 echo "✓ Ghostty terminal installed successfully!"
+echo ""
 echo "Launch with: ghostty"
+echo ""

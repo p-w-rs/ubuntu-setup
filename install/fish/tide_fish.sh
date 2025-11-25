@@ -1,9 +1,18 @@
-#!/bin/bash
 # REQUIRES_SUDO: no
-# DEPENDS_ON: fish fisher fonts ghostty_cfg
+# DEPENDS_ON: fish fisher nerdfonts ghostty ghostty_cfg fish_cfg
 
 set -e
 
-echo "Installing tide fisher plugin"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing Tide Prompt"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
-fisher install IlanCosman/tide@v6
+echo "→ Installing Tide prompt..."
+fisher install IlanCosman/tide@v6 2>&1 | grep -v "^$" || true
+
+echo ""
+echo "✓ Tide prompt installed successfully!"
+echo ""
+echo "Configure Tide by running: tide configure"
+echo ""

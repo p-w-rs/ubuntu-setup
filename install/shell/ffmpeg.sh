@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
@@ -7,15 +6,18 @@
 
 set -e
 
-echo "Installing FFmpeg..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing FFmpeg"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install FFmpeg
-echo "Installing FFmpeg..."
-apt install -y ffmpeg
+echo "→ Installing FFmpeg..."
+apt install -y ffmpeg > /dev/null 2>&1
 
 echo ""
 echo "✓ FFmpeg installed successfully!"
@@ -26,3 +28,4 @@ echo "Common usage examples:"
 echo "  ffmpeg -i input.mp4 output.avi          # Convert video"
 echo "  ffmpeg -i input.mp4 -vn output.mp3      # Extract audio"
 echo "  ffmpeg -i input.mp4 -ss 00:00:10 -t 5 output.mp4  # Cut 5 seconds from 10s mark"
+echo ""

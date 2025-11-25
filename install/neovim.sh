@@ -7,15 +7,18 @@
 
 set -e
 
-echo "Installing Neovim..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing Neovim"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install Neovim
-echo "Installing Neovim..."
-apt install -y neovim
+echo "→ Installing Neovim..."
+apt install -y neovim > /dev/null 2>&1
 
 echo ""
 echo "✓ Neovim installed successfully!"
@@ -31,3 +34,4 @@ echo "  nvim file.txt         # Edit a file"
 echo "  :Tutor                # Interactive tutorial (run inside Neovim)"
 echo ""
 echo "Verify installation: nvim --version"
+echo ""

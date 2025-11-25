@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON: cuda
 
@@ -7,24 +6,28 @@
 
 set -e
 
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing cuBLAS"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+
 # CUDA version from environment or default
 CUDA_VERSION="${NVIDIA_CUDA_VERSION:-13}"
 CUDA_VERSION_FORMATTED="${CUDA_VERSION}-0"
 
-echo "Installing cuBLAS..."
-
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install cuBLAS development libraries
-echo "Installing cuBLAS libraries..."
+echo "→ Installing cuBLAS libraries..."
 apt install -y \
     libcublas-$CUDA_VERSION_FORMATTED \
-    libcublas-dev-$CUDA_VERSION_FORMATTED
+    libcublas-dev-$CUDA_VERSION_FORMATTED > /dev/null 2>&1
 
 echo ""
 echo "✓ cuBLAS installed successfully!"
 echo ""
 echo "Library location: /usr/local/cuda/lib64/"
 echo "Headers location: /usr/local/cuda/include/"
+echo ""

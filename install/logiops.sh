@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON: llvm gcc
 
@@ -7,33 +6,37 @@
 
 set -e
 
-echo "Installing logiops..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing logiops"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Install build dependencies
-echo "Installing dependencies..."
+echo "→ Installing dependencies..."
 apt install -y \
     pkg-config \
     libevdev-dev \
     libudev-dev \
     libconfig++-dev \
-    libglib2.0-dev
+    libglib2.0-dev > /dev/null 2>&1
 
 # Clone logiops repository
 TEMP_DIR=$(mktemp -d)
+echo "→ Cloning logiops repository..."
 cd "$TEMP_DIR"
-git clone https://github.com/PixlOne/logiops.git
+git clone https://github.com/PixlOne/logiops.git 2>&1 | grep -v "^$" || true
 cd logiops
 
 # Build logiops
-echo "Building logiops..."
+echo "→ Building logiops..."
 mkdir build
 cd build
-cmake ..
-make
+cmake .. > /dev/null 2>&1
+make > /dev/null 2>&1
 
 # Install
-echo "Installing logiops..."
-make install
+echo "→ Installing logiops..."
+make install > /dev/null 2>&1
 
 # Clean up
 cd /
@@ -44,3 +47,4 @@ echo "✓ logiops installed successfully!"
 echo ""
 echo "Configure logiops by creating /etc/logid.cfg"
 echo "Enable service with: sudo systemctl enable --now logid"
+echo ""

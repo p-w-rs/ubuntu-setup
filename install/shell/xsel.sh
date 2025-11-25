@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
@@ -7,15 +6,18 @@
 
 set -e
 
-echo "Installing xsel..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing xsel"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install xsel
-echo "Installing xsel..."
-apt install -y xsel
+echo "→ Installing xsel..."
+apt install -y xsel > /dev/null 2>&1
 
 echo ""
 echo "✓ xsel installed successfully!"
@@ -27,3 +29,4 @@ echo "  xsel -b                     # Paste from clipboard"
 echo "  cat file.txt | xsel -b      # Copy file contents"
 echo ""
 echo "Note: For Wayland, use wl-clipboard instead"
+echo ""

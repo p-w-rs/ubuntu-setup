@@ -7,14 +7,17 @@
 
 set -e
 
-echo "Installing GCC compiler suite..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing GCC Compiler Suite"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install GCC suite and build tools
-echo "Installing GCC and build tools..."
+echo "→ Installing GCC and build tools..."
 apt install -y \
     build-essential \
     gcc \
@@ -25,7 +28,7 @@ apt install -y \
     cmake \
     autoconf \
     automake \
-    libtool
+    libtool > /dev/null 2>&1
 
 echo ""
 echo "✓ GCC suite installed successfully!"
@@ -39,3 +42,4 @@ echo "  • make, cmake (build tools)"
 echo "  • build-essential (compilation essentials)"
 echo ""
 echo "Verify installation: gcc --version"
+echo ""

@@ -7,7 +7,10 @@
 
 set -e
 
-echo "Installing Nerd Fonts..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing Nerd Fonts"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Nerd Fonts version
 NERD_FONTS_VERSION="v3.3.0"
@@ -31,31 +34,29 @@ FONTS=(
     "Mononoki"
 )
 
-echo "Downloading and installing Nerd Fonts..."
-echo "This may take a few minutes..."
+echo "→ Downloading and installing fonts..."
+echo "  (This may take a few minutes)"
 echo ""
 
 # Download and install each font
 for font in "${FONTS[@]}"; do
-    echo "Installing $font..."
+    echo "  Installing $font..."
 
     # Download font zip
     wget -q --show-progress \
         "https://github.com/ryanoasis/nerd-fonts/releases/download/${NERD_FONTS_VERSION}/${font}.zip" \
-        -O "/tmp/${font}.zip"
+        -O "/tmp/${font}.zip" 2>&1 | grep -v "^$" || true
 
     # Extract to font directory
     unzip -q -o "/tmp/${font}.zip" -d "$FONT_DIR/${font}"
 
     # Clean up
     rm "/tmp/${font}.zip"
-
-    echo "  ✓ $font installed"
 done
 
 # Update font cache
 echo ""
-echo "Updating font cache..."
+echo "→ Updating font cache..."
 fc-cache -fv "$FONT_DIR" > /dev/null 2>&1
 
 echo ""
@@ -70,5 +71,3 @@ echo "Font location: $FONT_DIR"
 echo ""
 echo "Restart your terminal or applications to use the new fonts"
 echo ""
-echo "To install additional fonts, visit:"
-echo "  https://github.com/ryanoasis/nerd-fonts/releases"

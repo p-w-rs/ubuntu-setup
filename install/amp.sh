@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
@@ -8,11 +7,14 @@
 
 set -e
 
-echo "Installing Amp..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing Amp"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Check if we're running as root (we need to switch users)
 if [ "$EUID" -ne 0 ]; then
-    echo "Error: This script must be run with sudo"
+    echo "! Error: This script must be run with sudo" >&2
     exit 1
 fi
 
@@ -20,24 +22,24 @@ fi
 ORIGINAL_USER="${SUDO_USER:-$USER}"
 ORIGINAL_HOME=$(eval echo ~$ORIGINAL_USER)
 
-echo "Installing Rust/Cargo temporarily..."
+echo "→ Installing Rust/Cargo temporarily..."
 # Install Rust as the original user
-sudo -u $ORIGINAL_USER bash -c 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
+sudo -u $ORIGINAL_USER bash -c 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y' > /dev/null 2>&1
 
 # Source cargo env
 export PATH="$ORIGINAL_HOME/.cargo/bin:$PATH"
 
-echo "Building Amp with Cargo..."
+echo "→ Building Amp with Cargo..."
 # Install amp as the original user
-sudo -u $ORIGINAL_USER bash -c "source $ORIGINAL_HOME/.cargo/env && cargo install amp"
+sudo -u $ORIGINAL_USER bash -c "source $ORIGINAL_HOME/.cargo/env && cargo install amp" 2>&1 | grep -v "^$" || true
 
 # Copy amp binary to system location
-echo "Installing Amp to /usr/local/bin..."
+echo "→ Installing Amp to /usr/local/bin..."
 cp "$ORIGINAL_HOME/.cargo/bin/amp" /usr/local/bin/amp
 chmod +x /usr/local/bin/amp
 
 # Remove Rust/Cargo completely
-echo "Removing Rust/Cargo..."
+echo "→ Removing Rust/Cargo..."
 rm -rf "$ORIGINAL_HOME/.cargo"
 rm -rf "$ORIGINAL_HOME/.rustup"
 
@@ -53,3 +55,4 @@ echo ""
 echo "Configuration: ~/.config/amp/"
 echo ""
 echo "Note: Rust/Cargo have been removed from the system"
+echo ""

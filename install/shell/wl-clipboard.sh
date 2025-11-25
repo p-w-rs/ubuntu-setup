@@ -7,15 +7,18 @@
 
 set -e
 
-echo "Installing wl-clipboard..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing wl-clipboard"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install wl-clipboard
-echo "Installing wl-clipboard..."
-apt install -y wl-clipboard
+echo "→ Installing wl-clipboard..."
+apt install -y wl-clipboard > /dev/null 2>&1
 
 echo ""
 echo "✓ wl-clipboard installed successfully!"
@@ -27,3 +30,4 @@ echo "  wl-paste                    # Paste from clipboard"
 echo "  cat file.txt | wl-copy      # Copy file contents"
 echo ""
 echo "Note: For X11, use xclip or xsel instead"
+echo ""

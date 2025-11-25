@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
@@ -7,15 +6,18 @@
 
 set -e
 
-echo "Installing xclip..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing xclip"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install xclip
-echo "Installing xclip..."
-apt install -y xclip
+echo "→ Installing xclip..."
+apt install -y xclip > /dev/null 2>&1
 
 echo ""
 echo "✓ xclip installed successfully!"
@@ -27,3 +29,4 @@ echo "  xclip -o                               # Paste from clipboard"
 echo "  cat file.txt | xclip -selection clipboard  # Copy file contents"
 echo ""
 echo "Note: For Wayland, use wl-clipboard instead"
+echo ""

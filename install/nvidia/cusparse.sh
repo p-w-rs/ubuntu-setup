@@ -1,4 +1,3 @@
-#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON: cuda
 
@@ -7,24 +6,28 @@
 
 set -e
 
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing cuSPARSE"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+
 # CUDA version from environment or default
 CUDA_VERSION="${NVIDIA_CUDA_VERSION:-13}"
 CUDA_VERSION_FORMATTED="${CUDA_VERSION}-0"
 
-echo "Installing cuSPARSE..."
-
 # Update package list
-echo "Updating package list..."
-apt update
+echo "→ Updating package list..."
+apt update > /dev/null 2>&1
 
 # Install cuSPARSE development libraries
-echo "Installing cuSPARSE libraries..."
+echo "→ Installing cuSPARSE libraries..."
 apt install -y \
     libcusparse-$CUDA_VERSION_FORMATTED \
-    libcusparse-dev-$CUDA_VERSION_FORMATTED
+    libcusparse-dev-$CUDA_VERSION_FORMATTED > /dev/null 2>&1
 
 echo ""
 echo "✓ cuSPARSE installed successfully!"
 echo ""
 echo "Library location: /usr/local/cuda/lib64/"
 echo "Headers location: /usr/local/cuda/include/"
+echo ""

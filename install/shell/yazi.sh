@@ -7,7 +7,10 @@
 
 set -e
 
-echo "Installing Yazi..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installing Yazi"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
 
 # Detect architecture
 ARCH=$(uname -m)
@@ -19,29 +22,30 @@ case $ARCH in
         YAZI_ARCH="aarch64-unknown-linux-gnu"
         ;;
     *)
-        echo "Error: Unsupported architecture: $ARCH"
+        echo "! Error: Unsupported architecture: $ARCH" >&2
         exit 1
         ;;
 esac
 
 # Get latest version from GitHub
-echo "Fetching latest version..."
+echo "→ Fetching latest version..."
 YAZI_VERSION=$(curl -s https://api.github.com/repos/sxyazi/yazi/releases/latest | grep -Po '"tag_name": "v\K[^"]*')
 
 if [ -z "$YAZI_VERSION" ]; then
-    echo "Error: Could not determine latest version"
+    echo "! Error: Could not determine latest version" >&2
     exit 1
 fi
 
-echo "Latest version: $YAZI_VERSION"
+echo "  Latest version: $YAZI_VERSION"
+echo ""
 
 # Download yazi
 YAZI_URL="https://github.com/sxyazi/yazi/releases/download/v${YAZI_VERSION}/yazi-${YAZI_ARCH}.zip"
-echo "Downloading yazi..."
+echo "→ Downloading yazi..."
 wget -q --show-progress "$YAZI_URL" -O /tmp/yazi.zip
 
 # Extract and install
-echo "Installing yazi..."
+echo "→ Installing yazi..."
 unzip -q -o /tmp/yazi.zip -d /tmp/
 chmod +x /tmp/yazi-${YAZI_ARCH}/yazi /tmp/yazi-${YAZI_ARCH}/ya
 mv /tmp/yazi-${YAZI_ARCH}/yazi /usr/local/bin/
@@ -62,3 +66,4 @@ echo "  q             - Quit"
 echo "  ?             - Show help"
 echo ""
 echo "All features enabled with dependencies installed"
+echo ""
