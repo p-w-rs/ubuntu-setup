@@ -37,20 +37,22 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         *)
-            echo "Unknown option: $1"
+            echo "! Unknown option: $1" >&2
             echo "Usage: ./install.sh [--nvidia] [--cuda-version X] [--cudnn-version Y] [--no-interactive]"
             exit 1
             ;;
     esac
 done
 
-echo "=== Installation Master Script ==="
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installation Master Script"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
 # Check if running as regular user
 if [ "$EUID" -eq 0 ]; then
-    echo "Error: Do not run this script with sudo"
-    echo "The script will ask for sudo when needed"
+    echo "! Error: Do not run this script with sudo" >&2
+    echo "  The script will ask for sudo when needed" >&2
     exit 1
 fi
 
@@ -81,7 +83,7 @@ export NVIDIA_CUDA_VERSION="$CUDA_VERSION"
 export NVIDIA_CUDNN_VERSION="$CUDNN_VERSION"
 
 if [ "$INSTALL_NVIDIA" = true ]; then
-    echo "NVIDIA installation enabled with CUDA $CUDA_VERSION and cuDNN $CUDNN_VERSION"
+    echo "→ NVIDIA installation enabled with CUDA $CUDA_VERSION and cuDNN $CUDNN_VERSION"
     echo ""
 fi
 
@@ -115,11 +117,11 @@ trap "rm -f $COMPLETED_FILE" EXIT
 
 # Find all .sh scripts in install directory
 if [ ! -d "$INSTALL_DIR" ]; then
-    echo "Error: Install directory not found: $INSTALL_DIR"
+    echo "! Error: Install directory not found: $INSTALL_DIR" >&2
     exit 1
 fi
 
-# Get list of scripts, excluding nvidia directory
+# Get list of scripts, excluding nvidia directory if NVIDIA installation is disabled
 SCRIPTS=()
 while IFS= read -r script; do
     # Skip scripts in nvidia directory if NVIDIA installation is disabled
@@ -136,6 +138,10 @@ fi
 
 echo "Found ${#SCRIPTS[@]} installation script(s)"
 echo ""
+
+# Track stats
+INSTALLED_COUNT=0
+TOTAL_COUNT=${#SCRIPTS[@]}
 
 # Process scripts in dependency order
 MAX_ITERATIONS=100
@@ -156,25 +162,18 @@ while [ ${#SCRIPTS[@]} -gt 0 ] && [ $iteration -lt $MAX_ITERATIONS ]; do
 
         # Check if dependencies are satisfied
         if check_dependencies "$script" "$depends_on"; then
-            echo ">>> Running: $script_name"
-            if [ -n "$depends_on" ]; then
-                echo "    Dependencies: $depends_on"
-            fi
-
             # Make script executable
             chmod +x "$script"
 
             # Run script with or without sudo
             if [ "$requires_sudo" = "yes" ]; then
-                echo "    (requires sudo)"
                 sudo "$script"
             else
-                echo "    (no sudo required)"
                 "$script"
             fi
 
-            echo "    ✓ Completed: $script_name"
-            echo ""
+            # Increment counter
+            INSTALLED_COUNT=$((INSTALLED_COUNT + 1))
 
             # Mark as completed
             echo "$script_name" >> "$COMPLETED_FILE"
@@ -190,19 +189,30 @@ while [ ${#SCRIPTS[@]} -gt 0 ] && [ $iteration -lt $MAX_ITERATIONS ]; do
 
     # If we didn't make progress, we have a circular dependency or missing dependency
     if [ "$made_progress" = false ]; then
-        echo "Error: Unable to resolve dependencies for remaining scripts:"
+        echo ""
+        echo "! Error: Unable to resolve dependencies for remaining scripts:" >&2
         for script in "${SCRIPTS[@]}"; do
             script_name=$(basename "$script" .sh)
             depends_on=$(get_metadata "$script" "DEPENDS_ON")
-            echo "  - $script_name (depends on: ${depends_on:-none})"
+            echo "  - $script_name (depends on: ${depends_on:-none})" >&2
         done
         exit 1
     fi
 done
 
 if [ ${#SCRIPTS[@]} -gt 0 ]; then
-    echo "Error: Maximum iterations reached. Possible circular dependency."
+    echo "! Error: Maximum iterations reached. Possible circular dependency." >&2
     exit 1
 fi
 
-echo "=== All installations completed successfully! ==="
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Installation Complete!"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "✓ Successfully installed $INSTALLED_COUNT component(s)"
+echo ""
+if [ "$INSTALL_NVIDIA" = true ]; then
+    echo "⚠  IMPORTANT: Reboot your system to activate NVIDIA drivers"
+    echo ""
+fi

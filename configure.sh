@@ -9,13 +9,15 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIGURE_DIR="$SCRIPT_DIR/configure"
 
-echo "=== Configuration Master Script ==="
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Configuration Master Script"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
 # Check if running as regular user
 if [ "$EUID" -eq 0 ]; then
-    echo "Error: Do not run this script with sudo"
-    echo "The script will ask for sudo when needed"
+    echo "! Error: Do not run this script with sudo" >&2
+    echo "  The script will ask for sudo when needed" >&2
     exit 1
 fi
 
@@ -49,8 +51,8 @@ trap "rm -f $COMPLETED_FILE" EXIT
 
 # Find all .sh scripts in configure directory
 if [ ! -d "$CONFIGURE_DIR" ]; then
-    echo "Warning: Configure directory not found: $CONFIGURE_DIR"
-    echo "Creating directory..."
+    echo "⚠  Warning: Configure directory not found: $CONFIGURE_DIR" >&2
+    echo "→ Creating directory..." >&2
     mkdir -p "$CONFIGURE_DIR"
 fi
 
@@ -64,6 +66,10 @@ fi
 
 echo "Found ${#SCRIPTS[@]} configuration script(s)"
 echo ""
+
+# Track stats
+CONFIGURED_COUNT=0
+TOTAL_COUNT=${#SCRIPTS[@]}
 
 # Process scripts in dependency order
 MAX_ITERATIONS=100
@@ -84,25 +90,18 @@ while [ ${#SCRIPTS[@]} -gt 0 ] && [ $iteration -lt $MAX_ITERATIONS ]; do
 
         # Check if dependencies are satisfied
         if check_dependencies "$script" "$depends_on"; then
-            echo ">>> Running: $script_name"
-            if [ -n "$depends_on" ]; then
-                echo "    Dependencies: $depends_on"
-            fi
-
             # Make script executable
             chmod +x "$script"
 
             # Run script with or without sudo
             if [ "$requires_sudo" = "yes" ]; then
-                echo "    (requires sudo)"
                 sudo "$script"
             else
-                echo "    (no sudo required)"
                 "$script"
             fi
 
-            echo "    ✓ Completed: $script_name"
-            echo ""
+            # Increment counter
+            CONFIGURED_COUNT=$((CONFIGURED_COUNT + 1))
 
             # Mark as completed
             echo "$script_name" >> "$COMPLETED_FILE"
@@ -118,19 +117,26 @@ while [ ${#SCRIPTS[@]} -gt 0 ] && [ $iteration -lt $MAX_ITERATIONS ]; do
 
     # If we didn't make progress, we have a circular dependency or missing dependency
     if [ "$made_progress" = false ]; then
-        echo "Error: Unable to resolve dependencies for remaining scripts:"
+        echo ""
+        echo "! Error: Unable to resolve dependencies for remaining scripts:" >&2
         for script in "${SCRIPTS[@]}"; do
             script_name=$(basename "$script" .sh)
             depends_on=$(get_metadata "$script" "DEPENDS_ON")
-            echo "  - $script_name (depends on: ${depends_on:-none})"
+            echo "  - $script_name (depends on: ${depends_on:-none})" >&2
         done
         exit 1
     fi
 done
 
 if [ ${#SCRIPTS[@]} -gt 0 ]; then
-    echo "Error: Maximum iterations reached. Possible circular dependency."
+    echo "! Error: Maximum iterations reached. Possible circular dependency." >&2
     exit 1
 fi
 
-echo "=== All configurations completed successfully! ==="
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Configuration Complete!"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "✓ Successfully configured $CONFIGURED_COUNT component(s)"
+echo ""

@@ -8,27 +8,30 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+echo ""
 echo "╔════════════════════════════════════════════╗"
 echo "║   Debian System Setup Script               ║"
+echo "║   Automated Installation & Configuration   ║"
 echo "╚════════════════════════════════════════════╝"
 echo ""
 
 # Check if running as regular user
 if [ "$EUID" -eq 0 ]; then
-    echo "Error: Do not run this script with sudo"
-    echo "The script will ask for sudo when needed"
+    echo "! Error: Do not run this script with sudo" >&2
+    echo "  The script will ask for sudo when needed" >&2
     exit 1
 fi
 
 # Verify this is a Debian-based system
 if ! command -v apt &> /dev/null; then
-    echo "Error: apt not found. This script is for Debian-based systems only."
+    echo "! Error: apt not found. This script is for Debian-based systems only." >&2
     exit 1
 fi
 
 # Step 1: Run all installation scripts
-echo "STEP 1: Running installation scripts..."
-echo "========================================"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  STEP 1: Installation Phase"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
 if [ -f "$SCRIPT_DIR/install.sh" ]; then
@@ -36,13 +39,13 @@ if [ -f "$SCRIPT_DIR/install.sh" ]; then
     # Pass all arguments through to install.sh
     "$SCRIPT_DIR/install.sh" "$@"
 else
-    echo "Warning: install.sh not found, skipping installations"
+    echo "⚠  Warning: install.sh not found, skipping installations" >&2
 fi
 
 echo ""
-echo "========================================"
-echo "STEP 2: Running configuration scripts..."
-echo "========================================"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  STEP 2: Configuration Phase"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
 # Step 2: Run all configuration scripts
@@ -50,7 +53,7 @@ if [ -f "$SCRIPT_DIR/configure.sh" ]; then
     chmod +x "$SCRIPT_DIR/configure.sh"
     "$SCRIPT_DIR/configure.sh"
 else
-    echo "Warning: configure.sh not found, skipping configurations"
+    echo "⚠  Warning: configure.sh not found, skipping configurations" >&2
 fi
 
 echo ""
@@ -58,5 +61,23 @@ echo "╔═══════════════════════�
 echo "║   Setup Complete!                          ║"
 echo "╚════════════════════════════════════════════╝"
 echo ""
-echo "Your system has been configured."
-echo "You may need to restart your shell or reboot for all changes to take effect."
+echo "✓ Your system has been configured."
+echo ""
+echo "Next steps:"
+echo "  1. Set Fish as your default shell:"
+echo "     chsh -s /usr/bin/fish"
+echo ""
+echo "  2. Log out and log back in"
+echo ""
+echo "  3. Configure Tide prompt:"
+echo "     tide configure"
+echo ""
+echo "  4. Add your API keys to:"
+echo "     ~/.config/fish/conf.d/90-api-keys.fish"
+echo ""
+if grep -q "INSTALL_NVIDIA=true" /tmp/setup-nvidia-flag 2>/dev/null; then
+    echo "  5. ⚠  REBOOT to activate NVIDIA drivers"
+    echo "     After reboot, verify with: nvidia-smi"
+    echo ""
+    rm -f /tmp/setup-nvidia-flag
+fi
