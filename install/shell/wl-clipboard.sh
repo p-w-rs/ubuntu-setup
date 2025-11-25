@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
 # Install wl-clipboard
@@ -14,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install wl-clipboard
 echo "→ Installing wl-clipboard..."
-apt install -y wl-clipboard > /dev/null 2>&1
+sudo apt install -y wl-clipboard > /dev/null 2>&1
 
 echo ""
 echo "✓ wl-clipboard installed successfully!"

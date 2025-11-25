@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON:
 
 # Install xclip
@@ -13,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install xclip
 echo "→ Installing xclip..."
-apt install -y xclip > /dev/null 2>&1
+sudo apt install -y xclip > /dev/null 2>&1
 
 echo ""
 echo "✓ xclip installed successfully!"

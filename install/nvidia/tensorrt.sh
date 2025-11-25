@@ -1,5 +1,5 @@
-# REQUIRES_SUDO: yes
-# DEPENDS_ON: cudnn
+#!/bin/bash
+# DEPENDS_ON: cuda cudnn
 
 # Install TensorRT
 # NVIDIA's high-performance deep learning inference optimizer and runtime
@@ -13,15 +13,15 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install TensorRT
 echo "→ Installing TensorRT packages..."
-apt install -y tensorrt > /dev/null 2>&1
+sudo apt install -y tensorrt > /dev/null 2>&1
 
 # Install additional TensorRT components
 echo "→ Installing TensorRT development packages..."
-apt install -y \
+sudo apt install -y \
     libnvinfer-dev \
     libnvinfer-plugin-dev \
     libnvparsers-dev \

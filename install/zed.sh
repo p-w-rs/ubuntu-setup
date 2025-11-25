@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: no
+#!/bin/bash
 # DEPENDS_ON: essential
 
 # Install Zed

@@ -1,6 +1,8 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
 # DEPENDS_ON: fish fisher fish_cfg
+
+# Install autopair.fish Plugin
+# Auto-complete matching pairs like (), [], {}, "", ''
 
 set -e
 

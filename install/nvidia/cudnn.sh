@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON: cuda
 
 # Install cuDNN (CUDA Deep Neural Network library)
@@ -21,11 +21,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install cuDNN
 echo "→ Installing cuDNN libraries..."
-apt install -y cudnn${CUDNN_VERSION}-cuda-${CUDA_VERSION} > /dev/null 2>&1
+sudo apt install -y cudnn${CUDNN_VERSION}-cuda-${CUDA_VERSION} > /dev/null 2>&1
 
 echo ""
 echo "✓ cuDNN installed successfully!"

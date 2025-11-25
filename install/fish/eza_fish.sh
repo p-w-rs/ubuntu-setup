@@ -1,6 +1,8 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
 # DEPENDS_ON: fish fisher fish_cfg eza
+
+# Install eza.fish Plugin
+# Provides aliases and functions for eza with nice defaults
 
 set -e
 

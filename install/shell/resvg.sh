@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON:
 
 # Install resvg
@@ -13,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install resvg
 echo "→ Installing resvg..."
-apt install -y resvg > /dev/null 2>&1
+sudo apt install -y resvg > /dev/null 2>&1
 
 echo ""
 echo "✓ resvg installed successfully!"

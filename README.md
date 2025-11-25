@@ -66,50 +66,52 @@ Run with command-line arguments:
 
 ## Script Metadata
 
-Every script must include these headers:
+Every script must include this header:
 
 ```bash
 #!/bin/bash
-# REQUIRES_SUDO: yes|no
 # DEPENDS_ON: script1 script2 script3
 ```
 
 ### Metadata Fields
 
-- **REQUIRES_SUDO**: Whether the script needs root privileges
-  - `yes` - Script will be run with `sudo`
-  - `no` - Script runs as regular user
-
 - **DEPENDS_ON**: Space-separated list of script names (without .sh)
   - Example: `gcc llvm` means this script requires gcc.sh and llvm.sh to run first
   - Leave empty if no dependencies
+
+### Handling sudo
+
+Scripts handle sudo internally where needed. Each script should:
+- Use `sudo` on individual commands that require root privileges
+- Run as regular user for commands that don't need elevated privileges
+- Be executable by regular users (don't run the whole script with sudo)
 
 ## How It Works
 
 1. **Dependency Resolution**: The master scripts automatically resolve dependencies and run scripts in the correct order
 2. **Circular Dependency Detection**: Scripts with circular dependencies will cause an error
 3. **Missing Dependency Detection**: Scripts with unsatisfied dependencies will be reported
-4. **Automatic sudo Handling**: Scripts are run with or without sudo based on their metadata
+4. **Automatic sudo Handling**: Scripts use sudo internally for commands that require it
 
 ## Adding New Scripts
 
 1. Create a new `.sh` file in `install/` or `configure/`
-2. Add the required metadata headers
-3. Write your installation/configuration logic
+2. Add the required metadata header (shebang and DEPENDS_ON)
+3. Write your installation/configuration logic with sudo on commands that need it
 4. The script will be automatically discovered and run in the correct order
 
 ### Example: New Install Script
 
 ```bash
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON: gcc llvm
 
 # Install my-package
 set -e
 
 echo "Installing my-package..."
-apt install -y my-package
+sudo apt update > /dev/null 2>&1
+sudo apt install -y my-package > /dev/null 2>&1
 
 echo "✓ my-package installed!"
 ```
@@ -198,10 +200,11 @@ No need to edit any script files!
 ✅ **Safe**: Checks for circular dependencies and missing requirements
 ✅ **Clear**: Each script declares its own requirements
 ✅ **Idempotent**: Safe to run multiple times
+✅ **Flexible sudo**: Scripts handle sudo at the command level, not script level
 
 ## Important Notes
 
 - Always run `setup.sh` as a **regular user**, not with sudo
-- Scripts will request sudo when needed
+- Scripts will request sudo when needed for individual commands
 - Works on any Debian-based distribution (Debian, Ubuntu, Linux Mint, etc.)
 - Script names (without .sh) are used for dependency tracking

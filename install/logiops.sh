@@ -1,5 +1,5 @@
-# REQUIRES_SUDO: yes
-# DEPENDS_ON: llvm gcc essential
+#!/bin/bash
+# DEPENDS_ON: essential llvm gcc
 
 # Install logiops - driver for Logitech mice and keyboards
 # Requires LLVM and GCC to be installed first
@@ -11,32 +11,33 @@ echo "  Installing logiops"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# Install build dependencies
+# Install build dependencies (needs sudo)
 echo "→ Installing dependencies..."
-apt install -y \
+sudo apt update > /dev/null 2>&1
+sudo apt install -y \
     pkg-config \
     libevdev-dev \
     libudev-dev \
     libconfig++-dev \
     libglib2.0-dev > /dev/null 2>&1
 
-# Clone logiops repository
+# Clone logiops repository (as regular user)
 TEMP_DIR=$(mktemp -d)
 echo "→ Cloning logiops repository..."
 cd "$TEMP_DIR"
 git clone https://github.com/PixlOne/logiops.git 2>&1 | grep -v "^$" || true
 cd logiops
 
-# Build logiops
+# Build logiops (as regular user)
 echo "→ Building logiops..."
 mkdir build
 cd build
 cmake .. > /dev/null 2>&1
 make > /dev/null 2>&1
 
-# Install
+# Install (needs sudo)
 echo "→ Installing logiops..."
-make install > /dev/null 2>&1
+sudo make install > /dev/null 2>&1
 
 # Clean up
 cd /

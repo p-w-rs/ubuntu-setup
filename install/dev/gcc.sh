@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON: essential
 
 # Install GCC compiler suite and build tools
@@ -14,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install GCC suite and build tools
 echo "→ Installing GCC and build tools..."
-apt install -y \
+sudo apt install -y \
     build-essential \
     gcc \
     g++ \

@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON:
 
 # Install jq
@@ -13,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install jq
 echo "→ Installing jq..."
-apt install -y jq > /dev/null 2>&1
+sudo apt install -y jq > /dev/null 2>&1
 
 echo ""
 echo "✓ jq installed successfully!"

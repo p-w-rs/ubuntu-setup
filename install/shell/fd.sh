@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
 # Install fd
@@ -14,15 +13,15 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install fd (package name is fd-find on Debian)
 echo "→ Installing fd..."
-apt install -y fd-find > /dev/null 2>&1
+sudo apt install -y fd-find > /dev/null 2>&1
 
 # Create symlink for 'fd' command (Debian names it 'fdfind')
 echo "→ Creating fd symlink..."
-ln -sf /usr/bin/fdfind /usr/local/bin/fd
+sudo ln -sf /usr/bin/fdfind /usr/local/bin/fd
 
 echo ""
 echo "✓ fd installed successfully!"

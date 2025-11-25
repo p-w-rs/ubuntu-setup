@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
 # DEPENDS_ON: essential
 
 # Configure Git

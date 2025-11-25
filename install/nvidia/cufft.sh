@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON: cuda
 
 # Install cuFFT (CUDA Fast Fourier Transform library)
@@ -17,11 +17,11 @@ CUDA_VERSION_FORMATTED="${CUDA_VERSION}-0"
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install cuFFT development libraries
 echo "→ Installing cuFFT libraries..."
-apt install -y \
+sudo apt install -y \
     libcufft-$CUDA_VERSION_FORMATTED \
     libcufft-dev-$CUDA_VERSION_FORMATTED > /dev/null 2>&1
 

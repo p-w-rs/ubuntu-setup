@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
 # Install file
@@ -14,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install file
 echo "→ Installing file..."
-apt install -y file > /dev/null 2>&1
+sudo apt install -y file > /dev/null 2>&1
 
 echo ""
 echo "✓ file utility installed successfully!"

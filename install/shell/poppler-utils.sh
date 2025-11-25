@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON:
 
 # Install Poppler Utils
@@ -13,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install poppler-utils
 echo "→ Installing poppler-utils..."
-apt install -y poppler-utils > /dev/null 2>&1
+sudo apt install -y poppler-utils > /dev/null 2>&1
 
 echo ""
 echo "✓ Poppler Utils installed successfully!"

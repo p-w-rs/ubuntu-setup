@@ -1,6 +1,5 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
-# DEPENDS_ON: fzf
+# DEPENDS_ON: essential fzf
 
 # Install zoxide
 # Smarter cd command that learns your habits

@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON: logiops
 
 # Configure logiops
@@ -12,9 +11,9 @@ echo "  Configuring logiops"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# Create logiops config file
+# Create logiops config file (needs sudo)
 echo "→ Creating logiops configuration..."
-cat > /etc/logid.cfg << 'LOGID_EOF'
+sudo tee /etc/logid.cfg > /dev/null << 'LOGID_EOF'
 devices: (
 {
   name: "MX Master 3";
@@ -245,10 +244,10 @@ devices: (
 );
 LOGID_EOF
 
-# Create systemd service file if it doesn't exist
+# Create systemd service file if it doesn't exist (needs sudo)
 if [ ! -f /etc/systemd/system/logid.service ]; then
     echo "→ Creating systemd service..."
-    cat > /etc/systemd/system/logid.service << 'SERVICE_EOF'
+    sudo tee /etc/systemd/system/logid.service > /dev/null << 'SERVICE_EOF'
 [Unit]
 Description=Logitech Configuration Daemon
 After=multi-user.target
@@ -267,11 +266,11 @@ WantedBy=multi-user.target
 SERVICE_EOF
 fi
 
-# Reload systemd and enable service
+# Reload systemd and enable service (needs sudo)
 echo "→ Enabling and starting logid service..."
-systemctl daemon-reload
-systemctl enable logid > /dev/null 2>&1
-systemctl restart logid
+sudo systemctl daemon-reload
+sudo systemctl enable logid > /dev/null 2>&1
+sudo systemctl restart logid
 
 echo ""
 echo "✓ logiops configured successfully!"

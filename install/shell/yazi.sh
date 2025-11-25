@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON: file nerdfonts ffmpeg 7zip jq poppler-utils fd ripgrep fzf zoxide resvg imagemagick xclip wl-clipboard xsel
 
 # Install Yazi
@@ -42,14 +41,14 @@ echo ""
 # Download yazi
 YAZI_URL="https://github.com/sxyazi/yazi/releases/download/v${YAZI_VERSION}/yazi-${YAZI_ARCH}.zip"
 echo "→ Downloading yazi..."
-wget -q --show-progress "$YAZI_URL" -O /tmp/yazi.zip
+wget -q "$YAZI_URL" -O /tmp/yazi.zip
 
 # Extract and install
 echo "→ Installing yazi..."
 unzip -q -o /tmp/yazi.zip -d /tmp/
 chmod +x /tmp/yazi-${YAZI_ARCH}/yazi /tmp/yazi-${YAZI_ARCH}/ya
-mv /tmp/yazi-${YAZI_ARCH}/yazi /usr/local/bin/
-mv /tmp/yazi-${YAZI_ARCH}/ya /usr/local/bin/
+sudo mv /tmp/yazi-${YAZI_ARCH}/yazi /usr/local/bin/
+sudo mv /tmp/yazi-${YAZI_ARCH}/ya /usr/local/bin/
 
 # Cleanup
 rm -rf /tmp/yazi.zip /tmp/yazi-${YAZI_ARCH}

@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON:
 
 # Install xsel
@@ -13,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install xsel
 echo "→ Installing xsel..."
-apt install -y xsel > /dev/null 2>&1
+sudo apt install -y xsel > /dev/null 2>&1
 
 echo ""
 echo "✓ xsel installed successfully!"

@@ -1,5 +1,5 @@
-# REQUIRES_SUDO: yes
-# DEPENDS_ON: llvm gcc essential
+#!/bin/bash
+# DEPENDS_ON: essential llvm gcc
 
 # Install Odin programming language
 # Builds in ~/.local and symlinks to /usr/local/bin
@@ -32,9 +32,9 @@ cd "$ODIN_DIR"
 echo "→ Building Odin..."
 make release-native > /dev/null 2>&1
 
-# Create symlink in /usr/local/bin
+# Create symlink in /usr/local/bin (needs sudo)
 echo "→ Creating symlink in /usr/local/bin..."
-ln -sf "$ODIN_DIR/odin" /usr/local/bin/odin
+sudo ln -sf "$ODIN_DIR/odin" /usr/local/bin/odin
 
 echo ""
 echo "✓ Odin installed successfully!"

@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON: essential
 
 # Install LLVM compiler suite and tools
@@ -14,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install LLVM suite
 echo "→ Installing LLVM tools..."
-apt install -y \
+sudo apt install -y \
     clang \
     clang-format \
     clang-tidy \

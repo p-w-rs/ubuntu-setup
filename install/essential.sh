@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
 # Install essential system utilities
@@ -15,11 +14,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install essential tools
 echo "→ Installing core utilities..."
-apt install -y \
+sudo apt install -y \
     curl \
     wget \
     git \
@@ -31,7 +30,7 @@ apt install -y \
 
 # Install compression/archive tools
 echo "→ Installing compression tools..."
-apt install -y \
+sudo apt install -y \
     unzip \
     zip \
     tar \
@@ -41,7 +40,7 @@ apt install -y \
 
 # Install system utilities
 echo "→ Installing system utilities..."
-apt install -y \
+sudo apt install -y \
     pciutils \
     usbutils \
     lsof \

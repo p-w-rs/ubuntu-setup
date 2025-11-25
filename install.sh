@@ -52,7 +52,7 @@ echo ""
 # Check if running as regular user
 if [ "$EUID" -eq 0 ]; then
     echo "! Error: Do not run this script with sudo" >&2
-    echo "  The script will ask for sudo when needed" >&2
+    echo "  Scripts will request sudo when needed" >&2
     exit 1
 fi
 
@@ -157,7 +157,6 @@ while [ ${#SCRIPTS[@]} -gt 0 ] && [ $iteration -lt $MAX_ITERATIONS ]; do
         script_name=$(basename "$script" .sh)
 
         # Get metadata
-        requires_sudo=$(get_metadata "$script" "REQUIRES_SUDO")
         depends_on=$(get_metadata "$script" "DEPENDS_ON")
 
         # Check if dependencies are satisfied
@@ -165,12 +164,8 @@ while [ ${#SCRIPTS[@]} -gt 0 ] && [ $iteration -lt $MAX_ITERATIONS ]; do
             # Make script executable
             chmod +x "$script"
 
-            # Run script with or without sudo
-            if [ "$requires_sudo" = "yes" ]; then
-                sudo "$script"
-            else
-                "$script"
-            fi
+            # Run script (it will handle sudo internally where needed)
+            "$script"
 
             # Increment counter
             INSTALLED_COUNT=$((INSTALLED_COUNT + 1))

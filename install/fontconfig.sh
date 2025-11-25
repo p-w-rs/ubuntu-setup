@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON: essential
 
 # Install Fontconfig
@@ -14,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install fontconfig
 echo "→ Installing fontconfig..."
-apt install -y fontconfig > /dev/null 2>&1
+sudo apt install -y fontconfig > /dev/null 2>&1
 
 echo ""
 echo "✓ Fontconfig installed successfully!"

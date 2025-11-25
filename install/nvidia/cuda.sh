@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON: nvidia-driver gcc
 
 # Install CUDA Toolkit
@@ -20,28 +20,28 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install CUDA toolkit
 echo "→ Installing CUDA toolkit..."
-apt install -y cuda-toolkit-$CUDA_VERSION_FORMATTED > /dev/null 2>&1
+sudo apt install -y cuda-toolkit-$CUDA_VERSION_FORMATTED > /dev/null 2>&1
 
 # Set up environment variables
 echo "→ Setting up environment variables..."
 CUDA_HOME="/usr/local/cuda-${CUDA_VERSION}.0"
 
 # Add to system-wide profile
-cat > /etc/profile.d/cuda.sh <<EOF
+sudo tee /etc/profile.d/cuda.sh > /dev/null <<EOF
 # CUDA environment variables
 export CUDA_HOME=$CUDA_HOME
 export PATH=\$CUDA_HOME/bin:\$PATH
 export LD_LIBRARY_PATH=\$CUDA_HOME/lib64:\$LD_LIBRARY_PATH
 EOF
 
-chmod +x /etc/profile.d/cuda.sh
+sudo chmod +x /etc/profile.d/cuda.sh
 
 # Create symlink for generic /usr/local/cuda
-ln -sf $CUDA_HOME /usr/local/cuda
+sudo ln -sf $CUDA_HOME /usr/local/cuda
 
 echo ""
 echo "✓ CUDA Toolkit installed successfully!"

@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON:
 
 # Install 7-Zip
@@ -13,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install 7zip
 echo "→ Installing 7zip..."
-apt install -y p7zip-full p7zip-rar > /dev/null 2>&1
+sudo apt install -y p7zip-full p7zip-rar > /dev/null 2>&1
 
 echo ""
 echo "✓ 7-Zip installed successfully!"

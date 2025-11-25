@@ -1,6 +1,8 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
 # DEPENDS_ON: fish fisher fish_cfg zoxide
+
+# Install zoxide.fish Plugin
+# Integrates zoxide with Fish shell
 
 set -e
 

@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: yes
 # DEPENDS_ON: essential
 
 # Install NVIDIA GPU drivers
@@ -13,9 +12,9 @@ echo "  Installing NVIDIA GPU Drivers"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# Detect system architecture and os version
+# Detect system architecture and Debian version
 ARCH=$(dpkg --print-architecture)
-DISTRO="$(lsb_release -rs | cut -d. -f1)"
+DISTRO="debian$(lsb_release -rs | cut -d. -f1)"
 
 echo "→ Detected: $DISTRO ($ARCH)"
 echo ""
@@ -29,16 +28,16 @@ fi
 # Add NVIDIA CUDA repository
 echo "→ Adding NVIDIA CUDA repository..."
 wget -q -O /tmp/cuda-keyring.deb https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb
-dpkg -i /tmp/cuda-keyring.deb > /dev/null 2>&1
+sudo dpkg -i /tmp/cuda-keyring.deb > /dev/null 2>&1
 rm /tmp/cuda-keyring.deb
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install CUDA drivers (includes NVIDIA driver)
 echo "→ Installing NVIDIA drivers..."
-apt install -y cuda-drivers > /dev/null 2>&1
+sudo apt install -y cuda-drivers > /dev/null 2>&1
 
 echo ""
 echo "✓ NVIDIA drivers installed successfully!"

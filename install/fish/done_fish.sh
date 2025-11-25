@@ -1,6 +1,8 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
 # DEPENDS_ON: fish fisher fish_cfg jq
+
+# Install done.fish Plugin
+# Automatically notifies you when long-running commands finish
 
 set -e
 

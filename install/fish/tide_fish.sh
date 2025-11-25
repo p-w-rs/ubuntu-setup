@@ -1,6 +1,8 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
 # DEPENDS_ON: fish fisher fish_cfg nerdfonts ghostty ghostty_cfg
+
+# Install Tide Prompt
+# The ultimate Fish prompt with beautiful themes
 
 set -e
 

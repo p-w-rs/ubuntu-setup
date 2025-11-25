@@ -1,6 +1,8 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
 # DEPENDS_ON: fish fisher fish_cfg fzf fd bat
+
+# Install fzf.fish Plugin
+# Provides key bindings and functions for fzf in Fish
 
 set -e
 

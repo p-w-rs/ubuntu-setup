@@ -1,5 +1,4 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
 # DEPENDS_ON: fish fisher autopair_fish done_fish eza_fish fzf_fish zoxide_fish
 
 # Configure Fish shell

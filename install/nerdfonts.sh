@@ -1,6 +1,5 @@
 #!/bin/bash
-# REQUIRES_SUDO: no
-# DEPENDS_ON: fontconfig essential
+# DEPENDS_ON: essential fontconfig
 
 # Install Nerd Fonts
 # Patched fonts with icons and glyphs for developers
@@ -35,17 +34,16 @@ FONTS=(
 )
 
 echo "→ Downloading and installing fonts..."
-echo "  (This may take a few minutes)"
 echo ""
 
 # Download and install each font
 for font in "${FONTS[@]}"; do
     echo "  Installing $font..."
 
-    # Download font zip
-    wget -q --show-progress \
+    # Download font zip quietly
+    wget -q \
         "https://github.com/ryanoasis/nerd-fonts/releases/download/${NERD_FONTS_VERSION}/${font}.zip" \
-        -O "/tmp/${font}.zip" 2>&1 | grep -v "^$" || true
+        -O "/tmp/${font}.zip"
 
     # Extract to font directory
     unzip -q -o "/tmp/${font}.zip" -d "$FONT_DIR/${font}"

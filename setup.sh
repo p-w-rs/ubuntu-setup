@@ -18,7 +18,7 @@ echo ""
 # Check if running as regular user
 if [ "$EUID" -eq 0 ]; then
     echo "! Error: Do not run this script with sudo" >&2
-    echo "  The script will ask for sudo when needed" >&2
+    echo "  Scripts will request sudo when needed" >&2
     exit 1
 fi
 

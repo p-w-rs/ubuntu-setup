@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON: cuda
 
 # Install cuSOLVER (CUDA Linear Algebra Solver library)
@@ -17,11 +17,11 @@ CUDA_VERSION_FORMATTED="${CUDA_VERSION}-0"
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install cuSOLVER development libraries
 echo "→ Installing cuSOLVER libraries..."
-apt install -y \
+sudo apt install -y \
     libcusolver-$CUDA_VERSION_FORMATTED \
     libcusolver-dev-$CUDA_VERSION_FORMATTED > /dev/null 2>&1
 

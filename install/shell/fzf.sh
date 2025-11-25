@@ -1,4 +1,4 @@
-# REQUIRES_SUDO: yes
+#!/bin/bash
 # DEPENDS_ON:
 
 # Install fzf
@@ -13,11 +13,11 @@ echo ""
 
 # Update package list
 echo "→ Updating package list..."
-apt update > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
 
 # Install fzf
 echo "→ Installing fzf..."
-apt install -y fzf > /dev/null 2>&1
+sudo apt install -y fzf > /dev/null 2>&1
 
 echo ""
 echo "✓ fzf installed successfully!"
