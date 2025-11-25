@@ -1,5 +1,5 @@
 #!/bin/bash
-# DEPENDS_ON: fish fisher fish_cfg jq
+# DEPENDS_ON: fish fisher jq
 
 # Install done.fish Plugin
 # Automatically notifies you when long-running commands finish

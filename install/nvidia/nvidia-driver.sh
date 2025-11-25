@@ -27,7 +27,7 @@ fi
 
 # Add NVIDIA CUDA repository
 echo "→ Adding NVIDIA CUDA repository..."
-wget -q -O /tmp/cuda-keyring.deb https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb
+wget -q -O /tmp/cuda-keyring.deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i /tmp/cuda-keyring.deb > /dev/null 2>&1
 rm /tmp/cuda-keyring.deb
 

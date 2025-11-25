@@ -1,5 +1,5 @@
 #!/bin/bash
-# DEPENDS_ON: fish fisher fish_cfg zoxide
+# DEPENDS_ON: fish fisher zoxide
 
 # Install zoxide.fish Plugin
 # Integrates zoxide with Fish shell

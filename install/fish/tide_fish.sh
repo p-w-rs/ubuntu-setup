@@ -1,5 +1,5 @@
 #!/bin/bash
-# DEPENDS_ON: fish fisher fish_cfg nerdfonts ghostty ghostty_cfg
+# DEPENDS_ON: fish fisher nerdfonts ghostty
 
 # Install Tide Prompt
 # The ultimate Fish prompt with beautiful themes

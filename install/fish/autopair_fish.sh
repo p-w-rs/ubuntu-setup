@@ -1,5 +1,5 @@
 #!/bin/bash
-# DEPENDS_ON: fish fisher fish_cfg
+# DEPENDS_ON: fish fisher
 
 # Install autopair.fish Plugin
 # Auto-complete matching pairs like (), [], {}, "", ''

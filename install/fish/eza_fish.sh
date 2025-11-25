@@ -1,5 +1,5 @@
 #!/bin/bash
-# DEPENDS_ON: fish fisher fish_cfg eza
+# DEPENDS_ON: fish fisher eza
 
 # Install eza.fish Plugin
 # Provides aliases and functions for eza with nice defaults
