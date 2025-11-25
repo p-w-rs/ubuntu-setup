@@ -1,6 +1,6 @@
-# Debian Setup Scripts
+# Debian/Ubuntu Setup Scripts
 
-Automated installation and configuration system for Debian-based distributions.
+Automated installation and configuration system for Debian-based distributions (Debian, Ubuntu, Devuan).
 
 ## Structure
 
@@ -22,47 +22,84 @@ Automated installation and configuration system for Debian-based distributions.
 
 ## Usage
 
-### Interactive Mode (Recommended)
-
-Run the complete setup with interactive prompts:
+### Basic Installation (No NVIDIA)
 
 ```bash
 cd ~/debian-setup
 ./setup.sh
 ```
 
-You'll be prompted whether to install NVIDIA drivers and CUDA toolkit. If you choose yes, you'll be asked for:
+### NVIDIA Installation (OS Must Be Specified)
 
-- CUDA version (default: 13)
-- cuDNN version (default: 9)
+**⚠️ IMPORTANT**: NVIDIA installation requires explicit OS specification. No auto-detection.
+
+```bash
+# Ubuntu 24.04
+./setup.sh --nvidia --os-type ubuntu --os-version 24
+
+# Ubuntu 22.04
+./setup.sh --nvidia --os-type ubuntu --os-version 22
+
+# Debian 12
+./setup.sh --nvidia --os-type debian --os-version 12
+
+# Debian 13
+./setup.sh --nvidia --os-type debian --os-version 13
+```
+
+### Interactive Mode
+
+Run with prompts for NVIDIA configuration:
+
+```bash
+./setup.sh
+```
+
+You'll be prompted for:
+1. Whether to install NVIDIA
+2. OS type (Ubuntu or Debian)
+3. OS version (22/24 for Ubuntu, 12/13 for Debian)
+4. CUDA version (default: 13)
+5. cuDNN version (default: 9)
+
+### Custom CUDA/cuDNN Versions
+
+```bash
+./setup.sh --nvidia \
+  --os-type ubuntu \
+  --os-version 24 \
+  --cuda-version 12 \
+  --cudnn-version 8
+```
 
 ### Non-Interactive Mode
 
-Run with command-line arguments:
-
 ```bash
-# Install everything including NVIDIA with default versions
-./setup.sh --nvidia
-
-# Install with specific CUDA and cuDNN versions
-./setup.sh --nvidia --cuda-version 12 --cudnn-version 8
-
-# Install without NVIDIA
-./setup.sh --no-interactive
+./setup.sh --nvidia --os-type debian --os-version 12 --no-interactive
 ```
 
 ### Install or Configure Separately
 
 ```bash
-# Run installations only (with NVIDIA prompts)
-./install.sh
-
-# Run installations with NVIDIA and specific versions
-./install.sh --nvidia --cuda-version 13 --cudnn-version 9
+# Run installations only
+./install.sh --nvidia --os-type ubuntu --os-version 24
 
 # Run configurations only
 ./configure.sh
 ```
+
+## Supported Systems
+
+### Ubuntu
+- **22.04** (Jammy Jellyfish)
+- **24.04** (Noble Numbat)
+
+### Debian
+- **12** (Bookworm)
+- **13** (Trixie)
+
+### Architecture
+- **x86_64 (amd64)** only
 
 ## Script Metadata
 
@@ -92,6 +129,7 @@ Scripts handle sudo internally where needed. Each script should:
 2. **Circular Dependency Detection**: Scripts with circular dependencies will cause an error
 3. **Missing Dependency Detection**: Scripts with unsatisfied dependencies will be reported
 4. **Automatic sudo Handling**: Scripts use sudo internally for commands that require it
+5. **Explicit OS Configuration**: NVIDIA components require explicit OS specification
 
 ## Adding New Scripts
 
@@ -118,21 +156,37 @@ echo "✓ my-package installed!"
 
 ## NVIDIA GPU Stack (Optional)
 
-The NVIDIA stack is **optional** and located in `install/nvidia/`. These scripts are only installed if you choose to enable them.
+The NVIDIA stack is **optional** and located in `install/nvidia/`.
 
-### Installation Options
+### ⚠️ Important: OS Must Be Specified
 
-**Interactive:** When you run `./setup.sh` or `./install.sh`, you'll be prompted:
+Unlike the base installation, **NVIDIA installation does not auto-detect your OS**. You must explicitly specify:
+- OS type: `ubuntu` or `debian`
+- OS version: `22`, `24` for Ubuntu; `12`, `13` for Debian
 
-```
-NVIDIA GPU stack installation available.
-Do you want to install NVIDIA drivers and CUDA toolkit? (y/N):
-```
+This ensures the correct CUDA repository is used for your specific system.
 
-**Non-interactive:** Use command-line flags:
+### Installation Examples
 
 ```bash
-./setup.sh --nvidia --cuda-version 13 --cudnn-version 9
+# Ubuntu 24.04
+./install.sh --nvidia --os-type ubuntu --os-version 24
+
+# Ubuntu 22.04
+./install.sh --nvidia --os-type ubuntu --os-version 22
+
+# Debian 12
+./install.sh --nvidia --os-type debian --os-version 12
+
+# Debian 13
+./install.sh --nvidia --os-type debian --os-version 13
+
+# With custom CUDA/cuDNN
+./install.sh --nvidia \
+  --os-type ubuntu \
+  --os-version 24 \
+  --cuda-version 12 \
+  --cudnn-version 8
 ```
 
 ### Dependency Chain
@@ -161,7 +215,30 @@ tensorrt (depends on: cudnn)
 - **cusparse.sh** - Sparse matrix operations
 - **cusolver.sh** - Linear algebra solvers
 - **cudnn.sh** - Deep Neural Network library
-- **tensorrt.sh** - Deep learning inference optimizer
+- **tensorrt.sh** - Deep learning inference optimizer (C/C++ libraries only, no Python bindings)
+
+### TensorRT: C/C++ Only
+
+The TensorRT installation installs **only C/C++ libraries**, not Python bindings:
+
+**Installed libraries:**
+- `libnvinfer-dev` - Core TensorRT runtime
+- `libnvinfer-plugin-dev` - Plugin library
+- `libnvparsers-dev` - Caffe parser
+- `libnvonnxparsers-dev` - ONNX parser
+
+**Not installed:**
+- `python3-libnvinfer` - Not installed
+- Python wheel packages - Not installed
+
+**Compile example:**
+```bash
+g++ -o app app.cpp \
+  -lnvinfer \
+  -lnvonnxparser \
+  -L/usr/lib/x86_64-linux-gnu \
+  -I/usr/include/x86_64-linux-gnu
+```
 
 ### Version Configuration
 
@@ -169,8 +246,14 @@ Versions are specified at runtime:
 
 - **CUDA version**: Defaults to 13, specify with `--cuda-version`
 - **cuDNN version**: Defaults to 9, specify with `--cudnn-version`
+- **OS type**: **REQUIRED**, specify with `--os-type ubuntu` or `--os-type debian`
+- **OS version**: **REQUIRED**, specify with `--os-version 22|24|12|13`
 
-The scripts automatically use these versions through environment variables.
+The scripts use these environment variables:
+- `NVIDIA_CUDA_VERSION`
+- `NVIDIA_CUDNN_VERSION`
+- `NVIDIA_OS_TYPE`
+- `NVIDIA_OS_VERSION`
 
 ### Important Notes
 
@@ -183,28 +266,157 @@ nvidia-smi  # Check driver installation
 nvcc --version  # Check CUDA installation
 ```
 
-### Updating Versions
+### Why No Auto-Detection for NVIDIA?
 
-To install different versions in the future, simply run:
+NVIDIA CUDA repositories are very specific to OS type and version. Explicitly specifying ensures:
+1. ✅ Correct repository is always used
+2. ✅ No ambiguity in multi-boot or container scenarios
+3. ✅ Clear documentation of target system
+4. ✅ Prevents wrong repository causing installation failures
 
-```bash
-./install.sh --nvidia --cuda-version 14 --cudnn-version 10
-```
+## System Maintenance
 
-No need to edit any script files!
+The `essential.sh` script includes:
+- Package list updates
+- Broken package fixes
+- Full system upgrade
+
+This ensures your system is up-to-date before installing any software.
 
 ## Benefits
 
-✅ **Automatic Dependency Management**: No need to manually order scripts
-✅ **Reusable**: Add new scripts without modifying the master scripts
-✅ **Safe**: Checks for circular dependencies and missing requirements
-✅ **Clear**: Each script declares its own requirements
-✅ **Idempotent**: Safe to run multiple times
-✅ **Flexible sudo**: Scripts handle sudo at the command level, not script level
+✅ **Automatic Dependency Management**: No need to manually order scripts  
+✅ **Reusable**: Add new scripts without modifying the master scripts  
+✅ **Safe**: Checks for circular dependencies and missing requirements  
+✅ **Clear**: Each script declares its own requirements  
+✅ **Idempotent**: Safe to run multiple times  
+✅ **Flexible sudo**: Scripts handle sudo at the command level, not script level  
+✅ **Explicit Configuration**: NVIDIA requires explicit OS specification for reliability  
+✅ **C/C++ Focus**: TensorRT installs development libraries without Python overhead  
 
 ## Important Notes
 
 - Always run `setup.sh` as a **regular user**, not with sudo
 - Scripts will request sudo when needed for individual commands
-- Works on any Debian-based distribution (Debian, Ubuntu, Linux Mint, etc.)
 - Script names (without .sh) are used for dependency tracking
+- **NVIDIA installation requires explicit OS specification** - no auto-detection
+
+## Command Reference
+
+### Basic Commands
+
+```bash
+# Install everything (no NVIDIA)
+./setup.sh
+
+# Install with NVIDIA (Ubuntu 24.04)
+./setup.sh --nvidia --os-type ubuntu --os-version 24
+
+# Install with NVIDIA (Debian 12)
+./setup.sh --nvidia --os-type debian --os-version 12
+
+# Install only (no configuration)
+./install.sh --nvidia --os-type ubuntu --os-version 24
+
+# Configure only
+./configure.sh
+```
+
+### Version Overrides
+
+```bash
+# Custom CUDA/cuDNN versions
+./setup.sh --nvidia \
+  --os-type ubuntu \
+  --os-version 24 \
+  --cuda-version 12 \
+  --cudnn-version 8
+```
+
+## Troubleshooting
+
+### Missing OS Parameters
+
+If you see:
+```
+! Error: NVIDIA installation requires --os-type and --os-version
+```
+
+Add the required parameters:
+```bash
+./install.sh --nvidia --os-type ubuntu --os-version 24
+```
+
+### Invalid OS Version
+
+If you see:
+```
+! Error: Invalid Ubuntu version: 20
+```
+
+Use a supported version:
+- Ubuntu: 22, 24
+- Debian: 12, 13
+
+### Wrong Repository Used
+
+If NVIDIA installation fails, verify:
+```bash
+# Check your actual OS
+cat /etc/os-release
+
+# Use the correct OS specification
+./install.sh --nvidia --os-type ubuntu --os-version 24
+```
+
+### General Issues
+
+```bash
+# Fix broken packages
+sudo apt --fix-broken install
+
+# Update package lists
+sudo apt update
+
+# Verify system
+cat /etc/os-release
+uname -m
+```
+
+## Examples
+
+### Fresh Ubuntu 24.04 System
+
+```bash
+cd ~/debian-setup
+
+# With NVIDIA
+./setup.sh --nvidia --os-type ubuntu --os-version 24
+
+# Without NVIDIA
+./setup.sh
+```
+
+### Fresh Debian 12 System
+
+```bash
+cd ~/debian-setup
+
+# With NVIDIA
+./setup.sh --nvidia --os-type debian --os-version 12
+
+# Without NVIDIA
+./setup.sh
+```
+
+### Development System (Custom CUDA)
+
+```bash
+cd ~/debian-setup
+
+./setup.sh --nvidia \
+  --os-type ubuntu \
+  --os-version 24 \
+  --cuda-version 12 \
+  --cudnn-version 8
+```

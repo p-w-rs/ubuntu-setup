@@ -1,13 +1,14 @@
 #!/bin/bash
 # DEPENDS_ON: cuda cudnn
 
-# Install TensorRT
+# Install TensorRT (C/C++ libraries only)
 # NVIDIA's high-performance deep learning inference optimizer and runtime
+# No Python bindings - C/C++ development only
 
 set -e
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "  Installing TensorRT"
+echo "  Installing TensorRT (C/C++ Libraries)"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
@@ -15,25 +16,29 @@ echo ""
 echo "→ Updating package list..."
 sudo apt update > /dev/null 2>&1
 
-# Install TensorRT
-echo "→ Installing TensorRT packages..."
-sudo apt install -y tensorrt > /dev/null 2>&1
-
-# Install additional TensorRT components
-echo "→ Installing TensorRT development packages..."
-sudo apt install -y \
-    libnvinfer-dev \
-    libnvinfer-plugin-dev \
-    libnvparsers-dev \
-    libnvonnxparsers-dev \
-    python3-libnvinfer \
-    python3-libnvinfer-dev > /dev/null 2>&1 || true
+# Install TensorRT using meta-packages
+echo "→ Installing TensorRT development libraries..."
+sudo apt install -y tensorrt-dev tensorrt-libs > /dev/null 2>&1
 
 echo ""
-echo "✓ TensorRT installed successfully!"
+echo "✓ TensorRT (C/C++) installed successfully!"
+echo ""
+echo "Installed packages:"
+echo "  • tensorrt-dev         (Development headers and libraries)"
+echo "  • tensorrt-libs        (Runtime libraries)"
+echo ""
+echo "Includes libraries:"
+echo "  • libnvinfer           (Core runtime)"
+echo "  • libnvinfer-plugin    (Plugin library)"
+echo "  • libnvinfer-dispatch  (Dispatch runtime)"
+echo "  • libnvinfer-lean      (Lean runtime)"
+echo "  • libnvonnxparsers     (ONNX parser)"
 echo ""
 echo "Library location: /usr/lib/x86_64-linux-gnu/"
 echo "Headers location: /usr/include/x86_64-linux-gnu/"
 echo ""
-echo "Verify installation: Check for libnvinfer in /usr/lib/"
+echo "Compile example:"
+echo "  g++ -o app app.cpp -lnvinfer -lnvonnxparser -L/usr/lib/x86_64-linux-gnu"
+echo ""
+echo "For more info: https://docs.nvidia.com/deeplearning/tensorrt/"
 echo ""

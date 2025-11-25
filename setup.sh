@@ -2,7 +2,7 @@
 
 # Top-level setup script for Debian-based systems
 # Runs all installation scripts, then all configuration scripts
-# Usage: ./setup.sh [--nvidia] [--cuda-version X] [--cudnn-version Y]
+# Usage: ./setup.sh [--nvidia --os-type TYPE --os-version VER] [--cuda-version X] [--cudnn-version Y]
 
 set -e
 
@@ -75,9 +75,10 @@ echo ""
 echo "  4. Add your API keys to:"
 echo "     ~/.config/fish/conf.d/90-api-keys.fish"
 echo ""
-if grep -q "INSTALL_NVIDIA=true" /tmp/setup-nvidia-flag 2>/dev/null; then
+
+# Check if NVIDIA was installed by looking at exported variables
+if [ -n "$NVIDIA_CUDA_VERSION" ]; then
     echo "  5. ⚠  REBOOT to activate NVIDIA drivers"
     echo "     After reboot, verify with: nvidia-smi"
     echo ""
-    rm -f /tmp/setup-nvidia-flag
 fi

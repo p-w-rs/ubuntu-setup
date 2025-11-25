@@ -12,9 +12,15 @@ echo "  Installing Essential System Utilities"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# Update package list
+# Update package list and fix any issues
 echo "→ Updating package list..."
 sudo apt update > /dev/null 2>&1
+
+echo "→ Fixing broken packages (if any)..."
+sudo apt --fix-broken install -y > /dev/null 2>&1 || true
+
+echo "→ Performing full system upgrade..."
+sudo apt full-upgrade -y > /dev/null 2>&1
 
 # Install essential tools
 echo "→ Installing core utilities..."
