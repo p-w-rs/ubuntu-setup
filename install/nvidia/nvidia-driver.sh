@@ -13,9 +13,9 @@ echo "  Installing NVIDIA GPU Drivers"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# Detect system architecture and Debian version
+# Detect system architecture and os version
 ARCH=$(dpkg --print-architecture)
-DISTRO="debian$(lsb_release -rs | cut -d. -f1)"
+DISTRO="$(lsb_release -rs | cut -d. -f1)"
 
 echo "→ Detected: $DISTRO ($ARCH)"
 echo ""
@@ -28,7 +28,7 @@ fi
 
 # Add NVIDIA CUDA repository
 echo "→ Adding NVIDIA CUDA repository..."
-wget -q -O /tmp/cuda-keyring.deb https://developer.download.nvidia.com/compute/cuda/repos/$DISTRO/$ARCH/cuda-keyring_1.1-1_all.deb
+wget -q -O /tmp/cuda-keyring.deb https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb
 dpkg -i /tmp/cuda-keyring.deb > /dev/null 2>&1
 rm /tmp/cuda-keyring.deb
 

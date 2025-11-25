@@ -1,5 +1,6 @@
+#!/bin/bash
 # REQUIRES_SUDO: no
-# DEPENDS_ON: fish fisher jq
+# DEPENDS_ON: fish fisher fish_cfg jq
 
 set -e
 
@@ -9,7 +10,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 
 echo "→ Installing done plugin..."
-fisher install franciscolourenco/done 2>&1 | grep -v "^$" || true
+fish -c "fisher install franciscolourenco/done" 2>&1 | grep -v "^$" || true
 
 echo ""
 echo "✓ done.fish plugin installed successfully!"

@@ -1,5 +1,6 @@
+#!/bin/bash
 # REQUIRES_SUDO: no
-# DEPENDS_ON: fish fisher zoxide
+# DEPENDS_ON: fish fisher fish_cfg zoxide
 
 set -e
 
@@ -9,7 +10,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 
 echo "→ Installing zoxide plugin..."
-fisher install kidonng/zoxide.fish 2>&1 | grep -v "^$" || true
+fish -c "fisher install kidonng/zoxide.fish" 2>&1 | grep -v "^$" || true
 
 echo ""
 echo "✓ zoxide.fish plugin installed successfully!"

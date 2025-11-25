@@ -1,5 +1,6 @@
+#!/bin/bash
 # REQUIRES_SUDO: no
-# DEPENDS_ON: fish fisher
+# DEPENDS_ON: fish fisher fish_cfg
 
 set -e
 
@@ -9,7 +10,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 
 echo "→ Installing autopair plugin..."
-fisher install jorgebucaran/autopair.fish 2>&1 | grep -v "^$" || true
+fish -c "fisher install jorgebucaran/autopair.fish" 2>&1 | grep -v "^$" || true
 
 echo ""
 echo "✓ autopair.fish plugin installed successfully!"

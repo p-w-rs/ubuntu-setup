@@ -1,3 +1,4 @@
+#!/bin/bash
 # REQUIRES_SUDO: yes
 # DEPENDS_ON:
 
@@ -19,15 +20,14 @@ apt update > /dev/null 2>&1
 echo "→ Installing bat..."
 apt install -y bat > /dev/null 2>&1
 
-# Create symlink for bat command (Debian names it 'batcat')
+# Create system-wide symlink (accessible to all users)
 echo "→ Creating bat symlink..."
-mkdir -p "$HOME/.local/bin"
-ln -sf /usr/bin/batcat "$HOME/.local/bin/bat"
+ln -sf /usr/bin/batcat /usr/local/bin/bat
 
 echo ""
 echo "✓ bat installed successfully!"
 echo ""
-echo "Symlink created: ~/.local/bin/bat -> /usr/bin/batcat"
+echo "System-wide symlink created: /usr/local/bin/bat"
 echo ""
 echo "Usage: bat [options] <file>"
 echo "Examples:"
