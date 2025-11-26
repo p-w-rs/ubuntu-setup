@@ -31,15 +31,15 @@ cd "$OLS_DIR"
 echo "→ Building OLS..."
 ./build.sh > /dev/null 2>&1
 
-# Create symlink in /usr/local/bin (needs sudo)
-echo "→ Creating symlink in /usr/local/bin..."
-sudo ln -sf "$OLS_DIR/ols" /usr/local/bin/ols
+# Create symlink in $HOME/.local/bin
+echo "→ Creating symlink in $HOME/.local/bin..."
+ln -sf "$OLS_DIR/ols" $HOME/.local/bin/ols
 
 echo ""
 echo "✓ OLS installed successfully!"
 echo ""
 echo "Installation location: $OLS_DIR"
-echo "Binary symlinked to: /usr/local/bin/ols"
+echo "Binary symlinked to: $HOME/.local/bin/ols"
 echo ""
 echo "Usage: ols"
 echo ""

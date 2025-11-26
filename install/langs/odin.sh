@@ -32,15 +32,15 @@ cd "$ODIN_DIR"
 echo "→ Building Odin..."
 make release-native > /dev/null 2>&1
 
-# Create symlink in /usr/local/bin (needs sudo)
-echo "→ Creating symlink in /usr/local/bin..."
-sudo ln -sf "$ODIN_DIR/odin" /usr/local/bin/odin
+# Create symlink in $HOME/.local/bin
+echo "→ Creating symlink in $HOME/.local/bin..."
+ln -sf "$ODIN_DIR/odin" $HOME/.local/bin/odin
 
 echo ""
 echo "✓ Odin installed successfully!"
 echo ""
 echo "Installation location: $ODIN_DIR"
-echo "Binary symlinked to: /usr/local/bin/odin"
+echo "Binary symlinked to: $HOME/.local/bin/odin"
 echo ""
 echo "Verify installation: odin version"
 echo ""
