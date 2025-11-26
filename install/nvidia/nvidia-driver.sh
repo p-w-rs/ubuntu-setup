@@ -76,10 +76,11 @@ case "$OS_TYPE" in
 esac
 
 # Detect architecture
-ARCH="x86_64" # $(dpkg --print-architecture)
+ARCH="x86_64"
 
-echo "→ OS: $OS_TYPE $OS_VERSION"
-echo "→ Architecture: $ARCH"
+echo "→ Target system:"
+echo "  OS: $OS_TYPE $OS_VERSION"
+echo "  Architecture: $ARCH"
 echo ""
 
 # Check if NVIDIA GPU is present
@@ -87,6 +88,48 @@ if ! lspci | grep -i nvidia &> /dev/null; then
     echo "! Warning: No NVIDIA GPU detected. Installation will continue anyway." >&2
     echo ""
 fi
+
+# Clean up any existing NVIDIA installations to prevent conflicts
+echo "→ Cleaning up any existing NVIDIA installations..."
+
+# Check if any nvidia packages are installed
+NVIDIA_PACKAGES=$(dpkg -l 2>/dev/null | grep -i nvidia | grep ^ii | awk '{print $2}' || true)
+
+if [ -n "$NVIDIA_PACKAGES" ]; then
+    echo "  Found existing NVIDIA packages:"
+    echo "$NVIDIA_PACKAGES" | sed 's/^/    - /'
+    echo ""
+    echo "  Removing existing NVIDIA packages..."
+
+    # Remove all nvidia packages (quoted to prevent shell expansion)
+    sudo apt-get remove --purge '^nvidia-.*' -y > /dev/null 2>&1 || true
+
+    # Remove any remaining dependencies
+    echo "  Cleaning up dependencies..."
+    sudo apt autoremove -y > /dev/null 2>&1 || true
+
+    echo "  ✓ Existing NVIDIA packages removed"
+else
+    echo "  No existing NVIDIA packages found"
+fi
+
+# Remove nouveau blacklist if it exists (NVIDIA installer will handle this)
+if [ -f /etc/modprobe.d/blacklist-nvidia-nouveau.conf ]; then
+    echo "  Removing old nouveau blacklist..."
+    sudo rm -f /etc/modprobe.d/blacklist-nvidia-nouveau.conf
+    echo "  ✓ Old nouveau blacklist removed"
+fi
+
+# Clean up any old xorg.conf that might cause conflicts
+if [ -f /etc/X11/xorg.conf ]; then
+    BACKUP_FILE="/etc/X11/xorg.conf.bak.$(date +%Y%m%d_%H%M%S)"
+    echo "  Backing up old xorg.conf to $BACKUP_FILE..."
+    sudo mv /etc/X11/xorg.conf "$BACKUP_FILE" 2>/dev/null || true
+    echo "  ✓ Old xorg.conf backed up and removed"
+fi
+
+echo "  ✓ Cleanup complete"
+echo ""
 
 # Construct repository URL
 case "$OS_TYPE" in
@@ -98,7 +141,8 @@ case "$OS_TYPE" in
         ;;
 esac
 
-echo "→ Using repository: $REPO_URL"
+echo "→ Using NVIDIA repository:"
+echo "  $REPO_URL"
 echo ""
 
 # Add NVIDIA CUDA repository
@@ -107,11 +151,12 @@ wget -q -O /tmp/cuda-keyring.deb ${REPO_URL}/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i /tmp/cuda-keyring.deb > /dev/null 2>&1
 rm /tmp/cuda-keyring.deb
 
-# Update package list and upgrade after adding NVIDIA repo
+# Update package list with NVIDIA repository
 echo "→ Updating package list with NVIDIA repository..."
 sudo apt update > /dev/null 2>&1
 
-echo "→ Upgrading packages from new repository..."
+# Upgrade packages from new repository
+echo "→ Upgrading packages from NVIDIA repository..."
 sudo apt upgrade -y > /dev/null 2>&1
 
 # Install CUDA drivers (includes NVIDIA driver)
@@ -126,6 +171,9 @@ echo "  OS: $OS_TYPE $OS_VERSION"
 echo "  Architecture: $ARCH"
 echo "  Repository: $REPO_URL"
 echo ""
-echo "IMPORTANT: Reboot your system for drivers to take effect"
-echo "After reboot, verify installation with: nvidia-smi"
+echo "⚠  IMPORTANT: Reboot your system for drivers to take effect"
+echo ""
+echo "After reboot, verify installation with:"
+echo "  nvidia-smi"
+echo "  cat /proc/driver/nvidia/version"
 echo ""
