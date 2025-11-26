@@ -17,7 +17,7 @@ sudo apt update > /dev/null 2>&1
 
 # Install resvg
 echo "→ Installing resvg..."
-sudo apt install -y resvg > /dev/null 2>&1
+sudo apt install -y librsvg2-bin > /dev/null 2>&1
 
 echo ""
 echo "✓ resvg installed successfully!"
