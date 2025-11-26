@@ -161,7 +161,7 @@ sudo apt upgrade -y > /dev/null 2>&1
 
 # Install CUDA drivers (includes NVIDIA driver)
 echo "→ Installing NVIDIA drivers..."
-sudo apt install -y cuda-drivers > /dev/null 2>&1
+sudo apt install -y nvidia-open > /dev/null 2>&1
 
 echo ""
 echo "✓ NVIDIA drivers installed successfully!"
