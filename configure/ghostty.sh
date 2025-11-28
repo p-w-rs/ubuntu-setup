@@ -50,31 +50,31 @@ shell-integration = detect
 shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
 
 # Window Management - tmux replacement
-window-save-state = always
+#window-save-state = always
 
 # Keybindings - tmux-style workflow
 # New window
-keybind = ctrl+n=new_window
+#keybind = ctrl+n=new_window
 
 # Navigate splits (vim-style)
-keybind = ctrl+h=goto_split:left
-keybind = ctrl+j=goto_split:bottom
-keybind = ctrl+k=goto_split:top
-keybind = ctrl+l=goto_split:right
+#keybind = ctrl+h=goto_split:left
+#keybind = ctrl+j=goto_split:bottom
+#keybind = ctrl+k=goto_split:top
+#keybind = ctrl+l=goto_split:right
 
 # Create new splits (tmux-style with ctrl+a prefix)
-keybind = ctrl+a>h=new_split:left
-keybind = ctrl+a>j=new_split:down
-keybind = ctrl+a>k=new_split:up
-keybind = ctrl+a>l=new_split:right
+#keybind = ctrl+a>h=new_split:left
+#keybind = ctrl+a>j=new_split:down
+#keybind = ctrl+a>k=new_split:up
+#keybind = ctrl+a>l=new_split:right
 
 # Split and tab management
-keybind = ctrl+a>f=toggle_split_zoom
-keybind = ctrl+a>n=next_tab
-keybind = ctrl+a>p=previous_tab
+#keybind = ctrl+a>f=toggle_split_zoom
+#keybind = ctrl+a>n=next_tab
+#keybind = ctrl+a>p=previous_tab
 
 # Reload configuration
-keybind = super+r=reload_config
+#keybind = super+r=reload_config
 GHOSTTY_EOF
 
 # Set Ghostty as default terminal emulator
